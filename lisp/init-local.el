@@ -50,6 +50,61 @@
 (global-set-key (kbd "M-m") 'move-beginning-of-line)
 (global-set-key (kbd "C-c '") 'comment-or-uncomment-region)
 
+(eval-when-compile
+  (require 'use-package))
+
+(use-package counsel
+  :ensure t)
+
+(use-package ivy
+  :ensure t
+  :init
+  (ivy-mode 1)
+  (counsel-mode 1)
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq search-default-mode #'char-fold-to-regexp)
+  (setq ivy-count-format "(%d/%d) ")
+  :bind
+  (("C-s" . 'swiper)
+   ("C-x b" . 'ivy-switch-buffer)
+   ("C-c v" . 'ivy-push-view)
+   ("C-c s" . 'ivy-switch-view)
+   ("C-c V" . 'ivy-pop-view)
+   ("C-x C-@" . 'counsel-mark-ring)
+   ("C-x C-SPC" . 'counsel-mark-ring)
+   :map minibuffer-local-map
+   ("C-r" . counsel-minibuffer-history)))
+
+(use-package amx
+  :ensure t
+  :init (amx-mode))
+
+(use-package ace-window
+  :ensure t
+  :bind (("C-x o" . 'ace-window)))
+
+(use-package mwim
+  :ensure t
+  :bind
+  ("C-a" . mwim-beginning-of-code-or-line)
+  ("C-e" . mwim-end-of-code-or-line))
+
+(use-package undo-tree
+  :ensure t
+  :init (global-undo-tree-mode)
+  :custom
+  (undo-tree-auto-save-history nil))
+
+(use-package smart-mode-line
+  :ensure t
+  :init (sml/setup))
+
+(use-package good-scroll
+  :ensure t
+  :if window-system
+  :init (good-scroll-mode))
+
 (provide 'init-local)
 
 ;;; init-local.el ends here
